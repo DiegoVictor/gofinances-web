@@ -6,11 +6,13 @@ import Routes from './routes';
 import Theme from './styles/theme';
 
 const App: React.FC = () => (
-  <Router>
+  <>
     <Theme />
     <ToastContainer />
-    <Routes />
-  </Router>
+    <Router>
+      <Routes />
+    </Router>
+  </>
 );
 
 export default App;
