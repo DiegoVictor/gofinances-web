@@ -3,12 +3,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import Routes from './routes';
-
-import GlobalStyle from './styles/global';
+import Theme from './styles/theme';
 
 const App: React.FC = () => (
   <Router>
-    <GlobalStyle />
+    <Theme />
     <ToastContainer />
     <Routes />
   </Router>
