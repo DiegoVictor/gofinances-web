@@ -2,10 +2,10 @@ import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 
-import api from '../src/services/api';
-import App from '../src/App';
+import api from '../../src/services/api';
+import App from '../../src/App';
 
-jest.mock('../src/utils/formatValue.ts', () => ({
+jest.mock('../../src/utils/formatValue.ts', () => ({
   __esModule: true,
   default: jest.fn().mockImplementation((value: number) => {
     switch (value) {
@@ -25,19 +25,19 @@ jest.mock('../src/utils/formatValue.ts', () => ({
   }),
 }));
 
-const apiMock = new MockAdapter(api);
-
-const wait = (amount = 0): Promise<void> => {
-  return new Promise(resolve => setTimeout(resolve, amount));
-};
-
-const actWait = async (amount = 0): Promise<void> => {
-  await act(async () => {
-    await wait(amount);
-  });
-};
-
 describe('Dashboard', () => {
+  const apiMock = new MockAdapter(api);
+
+  const wait = (amount = 0): Promise<void> => {
+    return new Promise(resolve => setTimeout(resolve, amount));
+  };
+
+  const actWait = async (amount = 0): Promise<void> => {
+    await act(async () => {
+      await wait(amount);
+    });
+  };
+
   it('should be able to list the total balance inside the cards', async () => {
     const { getByTestId } = render(<App />);
 
