@@ -4,8 +4,8 @@ interface UploadProps {
   isDragActive: boolean;
   isDragReject: boolean;
   refKey?: string;
-  [key: string]: any;
   type?: 'error' | 'success' | 'default';
+  [key: string]: unknown;
 }
 
 const dragActive = css`
