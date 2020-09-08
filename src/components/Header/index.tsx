@@ -9,10 +9,7 @@ interface HeaderProps {
   currentPage?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({
-  size = 'large',
-  currentPage,
-}: HeaderProps) => (
+const Header: React.FC<HeaderProps> = ({ size, currentPage }: HeaderProps) => (
   <Container size={size}>
     <header>
       <img src={Logo} alt="GoFinances" />
@@ -27,5 +24,10 @@ const Header: React.FC<HeaderProps> = ({
     </header>
   </Container>
 );
+
+Header.defaultProps = {
+  size: 'large',
+  currentPage: undefined,
+};
 
 export default Header;
