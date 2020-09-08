@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import Dropzone from 'react-dropzone';
+import Dropzone, { DropzoneState } from 'react-dropzone';
 
 import { DropContainer, UploadMessage } from './styles';
 
@@ -31,7 +31,12 @@ const Upload: React.FC<UploadProps> = ({ onUpload }: UploadProps) => {
         accept=".csv, application/vnd.ms-excel, text/csv"
         onDropAccepted={files => onUpload(files)}
       >
-        {({ getRootProps, getInputProps, isDragActive, isDragReject }): any => (
+        {({
+          getRootProps,
+          getInputProps,
+          isDragActive,
+          isDragReject,
+        }: DropzoneState): JSX.Element => (
           <DropContainer
             {...getRootProps()}
             isDragActive={isDragActive}
