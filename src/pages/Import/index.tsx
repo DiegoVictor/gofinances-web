@@ -31,7 +31,8 @@ const Import: React.FC = () => {
         await api.post('/transactions/import', data);
         navigate('/');
       } catch (err) {
-        toast.error(err.message);
+        const { message } = err as Error;
+        toast.error(message);
       }
     }
   }
