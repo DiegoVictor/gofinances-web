@@ -91,4 +91,29 @@ describe('Upload', () => {
 
     expect(getByText('Solte o arquivo aqui')).toBeInTheDocument();
   });
+
+  it('should be able to upload a file', async () => {
+    const onUpload = jest.fn();
+    const { getByTestId } = render(<Upload onUpload={onUpload} />);
+
+    const input = getByTestId('upload');
+    const file = new File(
+      [
+        'title, type, value, category\n' +
+          'Loan, income, 1500, Others\n' +
+          'Website Hosting, outcome, 50, Others\n' +
+          'Ice cream, outcome, 3, Food',
+      ],
+      'import.csv',
+      {
+        type: 'text/csv',
+      },
+    );
+
+    await act(async () => {
+      fireEvent.change(input, { target: { files: [file] } });
+    });
+
+    expect(onUpload).toHaveBeenCalledWith([file]);
+  });
 });
