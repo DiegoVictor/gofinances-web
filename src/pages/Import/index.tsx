@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import filesize from 'filesize';
 import { toast } from 'react-toastify';
 
@@ -18,7 +18,7 @@ interface FileProps {
 
 const Import: React.FC = () => {
   const [uploadedFiles, setUploadedFiles] = useState<FileProps[]>([]);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   async function handleUpload(): Promise<void> {
     const data = new FormData();
@@ -29,7 +29,7 @@ const Import: React.FC = () => {
 
       try {
         await api.post('/transactions/import', data);
-        history.push('/');
+        navigate('/');
       } catch (err) {
         toast.error(err.message);
       }

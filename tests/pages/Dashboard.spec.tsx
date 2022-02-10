@@ -1,9 +1,11 @@
 import React from 'react';
-import { render, fireEvent, act } from '@testing-library/react';
+import { render, fireEvent, act, waitFor } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
 
 import api from '../../src/services/api';
-import App from '../../src/App';
+import Dashboard from '../../src/pages/Dashboard';
 
 jest.mock('../../src/utils/formatValue.ts', () => ({
   __esModule: true,
@@ -28,18 +30,8 @@ jest.mock('../../src/utils/formatValue.ts', () => ({
 describe('Dashboard', () => {
   const apiMock = new MockAdapter(api);
 
-  const wait = (amount = 0): Promise<void> => {
-    return new Promise(resolve => setTimeout(resolve, amount));
-  };
-
-  const actWait = async (amount = 0): Promise<void> => {
-    await act(async () => {
-      await wait(amount);
-    });
-  };
-
   it('should be able to list the total balance inside the cards', async () => {
-    const { getByTestId } = render(<App />);
+    const history = createMemoryHistory();
 
     apiMock.onGet('transactions').reply(200, {
       transactions: [
@@ -96,7 +88,13 @@ describe('Dashboard', () => {
       },
     });
 
-    await actWait();
+    const { getByTestId } = render(
+      <Router location={history.location} navigator={history}>
+        <Dashboard />
+      </Router>,
+    );
+
+    await waitFor(() => getByTestId('balance-income'));
 
     expect(getByTestId('balance-income')).toHaveTextContent('R$ 6.000,00');
     expect(getByTestId('balance-outcome')).toHaveTextContent('R$ 50,00');
@@ -104,7 +102,7 @@ describe('Dashboard', () => {
   });
 
   it('should be able to list the transactions', async () => {
-    const { getByText } = render(<App />);
+    const history = createMemoryHistory();
 
     apiMock.onGet('transactions').reply(200, {
       transactions: [
@@ -161,9 +159,14 @@ describe('Dashboard', () => {
       },
     });
 
-    await actWait();
+    const { getByText } = render(
+      <Router location={history.location} navigator={history}>
+        <Dashboard />
+      </Router>,
+    );
 
-    expect(getByText('Loan')).toBeTruthy();
+    await waitFor(() => getByText('Loan'));
+
     expect(getByText('R$ 1.500,00')).toBeTruthy();
     expect(getByText('Others')).toBeTruthy();
 
@@ -177,43 +180,17 @@ describe('Dashboard', () => {
   });
 
   it('should be able to navigate to the import page', async () => {
-    const { getByText } = render(<App />);
-
-    await actWait(500);
-    fireEvent.click(getByText('Importar'));
-    await actWait();
-
-    expect(window.location.pathname).toEqual('/import');
-  });
-
-  test('should be able to upload a file', async () => {
-    const { getByText, getByTestId } = render(<App />);
-
-    fireEvent.click(getByText('Importar'));
-
-    await actWait();
-    const input = getByTestId('upload');
-    const file = new File(
-      [
-        'title, type, value, category\n' +
-          'Loan, income, 1500, Others\n' +
-          'Website Hosting, outcome, 50, Others\n' +
-          'Ice cream, outcome, 3, Food',
-      ],
-      'import.csv',
-      {
-        type: 'text/csv',
-      },
+    const history = createMemoryHistory();
+    const { getByText } = render(
+      <Router location={history.location} navigator={history}>
+        <Dashboard />
+      </Router>,
     );
 
-    Object.defineProperty(input, 'files', {
-      value: [file],
+    await act(async () => {
+      fireEvent.click(getByText('Importar'));
     });
 
-    fireEvent.change(input);
-
-    await actWait();
-    expect(getByText('import.csv')).toBeTruthy();
-    await actWait();
+    expect(history.location.pathname).toEqual('/import');
   });
 });
