@@ -24,23 +24,6 @@
     "test": "react-app-rewired test --coverage --watchAll=false --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject"
   },
-  "jest": {
-    "roots": [
-      "<rootDir>/src/",
-      "<rootDir>/tests/"
-    ],
-    "testMatch": [
-      "**/tests/**/*.spec.tsx"
-    ],
-    "coverageDirectory": "tests/coverage",
-    "collectCoverageFrom": [
-      "!src/*.tsx",
-      "!src/routes/*.tsx",
-      "!src/utils/*.ts",
-      "!src/styles/*.ts",
-      "!src/services/*.ts"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
