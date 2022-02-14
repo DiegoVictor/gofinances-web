@@ -21,7 +21,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --coverage --watchAll=false --env=jest-environment-jsdom-sixteen",
+    "test": "jest --runInBand",
     "eject": "react-scripts eject"
   },
   "browserslist": {
@@ -57,6 +57,7 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "jest-environment-jsdom-sixteen": "^2.0.0",
+    "jest-transform-stub": "^2.0.0",
     "prettier": "^2.0.4",
     "react-app-rewired": "^2.1.5",
     "ts-jest": "^27.1.3"
