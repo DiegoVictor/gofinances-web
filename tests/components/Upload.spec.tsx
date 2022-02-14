@@ -16,30 +16,6 @@ interface DataTransfer {
 }
 
 describe('Upload', () => {
-  function flushPromises(
-    ui: JSX.Element,
-    container: HTMLElement,
-  ): Promise<HTMLElement> {
-    return new Promise(resolve =>
-      global.setImmediate(() => {
-        render(ui, { container });
-        resolve(container);
-      }),
-    );
-  }
-
-  async function dispatchEvt(
-    node: HTMLDivElement,
-    type: string,
-    data: DataTransfer,
-  ): Promise<void> {
-    const event = new Event(type, { bubbles: true });
-    Object.assign(event, data);
-    await act(async () => {
-      fireEvent(node, event);
-    });
-  }
-
   function mockData(files: File[]): DataTransfer {
     return {
       dataTransfer: {
@@ -66,8 +42,9 @@ describe('Upload', () => {
     const dropzone = container.querySelector('div');
 
     if (dropzone) {
-      dispatchEvt(dropzone, 'dragenter', data);
-      await flushPromises(component, container);
+      await act(async () => {
+        fireEvent.dragEnter(dropzone, data);
+      });
     }
 
     expect(getByText('Arquivo não suportado')).toBeInTheDocument();
@@ -85,8 +62,9 @@ describe('Upload', () => {
     const dropzone = container.querySelector('div');
 
     if (dropzone) {
-      dispatchEvt(dropzone, 'dragenter', data);
-      await flushPromises(component, container);
+      await act(async () => {
+        fireEvent.dragEnter(dropzone, data);
+      });
     }
 
     expect(getByText('Solte o arquivo aqui')).toBeInTheDocument();
