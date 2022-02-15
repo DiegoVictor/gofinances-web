@@ -4,10 +4,10 @@ import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
-import api from '../../src/services/api';
-import Dashboard from '../../src/pages/Dashboard';
+import api from '../../../src/services/api';
+import Dashboard from '../../../src/pages/Dashboard';
 
-jest.mock('../../src/utils/formatValue.ts', () => ({
+jest.mock('../../../src/utils/formatValue.ts', () => ({
   __esModule: true,
   default: jest.fn().mockImplementation((value: number) => {
     switch (value) {

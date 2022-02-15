@@ -6,8 +6,8 @@ import { act } from 'react-dom/test-utils';
 import { toast } from 'react-toastify';
 import { render, fireEvent } from '@testing-library/react';
 
-import api from '../../src/services/api';
-import Import from '../../src/pages/Import';
+import api from '../../../src/services/api';
+import Import from '../../../src/pages/Import';
 
 jest.mock('react-toastify');
 
@@ -22,7 +22,9 @@ jest.mock('react-router-dom', () => {
 });
 
 // eslint-disable-next-line global-require
-jest.mock('../../src/components/Upload', () => require('../../mocks/Upload'));
+jest.mock('../../../src/components/Upload', () =>
+  require('../../../mocks/Upload'),
+);
 
 describe('Import', () => {
   const apiMock = new MockAdapter(api);
