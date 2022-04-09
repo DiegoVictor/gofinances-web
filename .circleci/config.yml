@@ -4,10 +4,10 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/node:12
+      - image: circleci/node:16
     steps:
       - checkout
-      - run: npm install
+      - run: npm ci
       - run: npm run test
       - codecov/upload:
           file: tests/coverage/*.json
