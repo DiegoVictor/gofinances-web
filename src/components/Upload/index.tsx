@@ -4,7 +4,7 @@ import Dropzone, { DropzoneState } from 'react-dropzone';
 import { DropContainer, UploadMessage } from './styles';
 
 interface UploadProps {
-  onUpload: Function;
+  onUpload: (files: File[]) => void;
 }
 
 const Upload: React.FC<UploadProps> = ({ onUpload }: UploadProps) => {
