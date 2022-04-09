@@ -26,10 +26,9 @@ jest.mock('../../../src/utils/formatValue.ts', () => ({
     }
   }),
 }));
+const apiMock = new MockAdapter(api);
 
 describe('Dashboard', () => {
-  const apiMock = new MockAdapter(api);
-
   it('should be able to list the total balance inside the cards', async () => {
     const history = createMemoryHistory();
 
@@ -94,9 +93,10 @@ describe('Dashboard', () => {
       </Router>,
     );
 
-    await waitFor(() => getByTestId('balance-income'));
+    await waitFor(() =>
+      expect(getByTestId('balance-income')).toHaveTextContent('R$ 6.000,00'),
+    );
 
-    expect(getByTestId('balance-income')).toHaveTextContent('R$ 6.000,00');
     expect(getByTestId('balance-outcome')).toHaveTextContent('R$ 50,00');
     expect(getByTestId('balance-total')).toHaveTextContent('R$ 5.950,00');
   });
