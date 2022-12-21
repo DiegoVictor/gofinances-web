@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import filesize from 'filesize';
+import { filesize } from 'filesize';
 import { toast } from 'react-toastify';
 
 import Header from '../../components/Header';
@@ -39,11 +39,14 @@ const Import: React.FC = () => {
 
   const submitFile = (files: File[]): void => {
     setUploadedFiles(
-      files.map(file => ({
-        file,
-        name: file.name,
-        readableSize: filesize(file.size),
-      })),
+      files.map(file => {
+        const readableSize = String(filesize(file.size));
+        return {
+          file,
+          name: file.name,
+          readableSize,
+        };
+      }),
     );
   };
 
