@@ -8,11 +8,10 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-          cache-path: ~/gofinances-web/node_modules
+          cache-path: ~/project/node_modules
       - run: npm run test
-      - codecov/upload:
-          file: tests/coverage/*.json
+      - codecov/upload
 workflows:
-    test:
+    main:
       jobs:
         - test
